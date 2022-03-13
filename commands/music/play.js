@@ -17,8 +17,10 @@ module.exports = {
         if (!res || !res.tracks.length) return message.channel.send(`No results found ${message.author}... try again ? ❌`);
 
         const queue = await player.createQueue(message.guild, {
-            metadata: message.channel
-        });
+						leaveOnEnd: false, //leaveOnEndCooldown doesnt work anymore
+						leaveOnEmptyCooldown: 20000, //Or use `leaveOnEmpty: false` to stay in the vc 24/7, 20000 (ms) is 20s
+						metadata: message.channel
+				});
 
         try {
             if (!queue.connection) await queue.connect(message.member.voice.channel);
